@@ -1,3 +1,10 @@
+        <?php
+session_start();
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 'owner') {
+    echo "Anda tidak punya akses ke halaman ini.";
+    exit;
+}
+?>
         <h4>Data Barang</h4>
         <br />
         <?php if(isset($_GET['success-stok'])){?>
@@ -150,11 +157,11 @@
                                 <?php
 									$format = $lihat -> barang_id();
 								?>
-                                <tr>
-                                    <td>ID Barang</td>
-                                    <td><input type="text" readonly="readonly" required value="<?php echo $format;?>"
-                                            class="form-control" name="id"></td>
-                                </tr>
+                               <tr>
+                                <td>ID Barang</td>
+                                <td><input type="text" required class="form-control" name="id"></td>
+                            </tr>
+
                                 <tr>
                                     <td>Kategori</td>
                                     <td>

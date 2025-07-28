@@ -5,8 +5,13 @@
       *********************************************************************************************************************************************************** -->
  <!--main content start-->
 <?php 
-	$id = $_SESSION['admin']['id_member'];
-	$hasil = $lihat -> member_edit($id);
+
+session_start();
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 'owner') {
+    echo "Anda tidak punya akses ke halaman ini.";
+    exit;
+}
+?>
 ?>
 <h4>Profil Pengguna Aplikasi</h4>
 <br>

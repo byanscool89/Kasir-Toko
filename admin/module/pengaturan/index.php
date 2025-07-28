@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['level']) || $_SESSION['level'] != 'owner') {
+    echo "Anda tidak punya akses ke halaman ini.";
+    exit;
+}
+?>
+
 <h4>Pengaturan Toko</h4>
 <br>
 <?php if(isset($_GET['success'])){?>

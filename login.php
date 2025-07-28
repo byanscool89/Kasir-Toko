@@ -1,27 +1,32 @@
 <?php
-	@ob_start();
-	session_start();
-	if(isset($_POST['proses'])){
-		require 'config.php';
-			
-		$user = strip_tags($_POST['user']);
-		$pass = strip_tags($_POST['pass']);
+@ob_start();
+session_start();
+if(isset($_POST['proses'])){
+	require 'config.php';
 
-		$sql = 'select member.*, login.user, login.pass
-				from member inner join login on member.id_member = login.id_member
-				where user =? and pass = md5(?)';
-		$row = $config->prepare($sql);
-		$row -> execute(array($user,$pass));
-		$jum = $row -> rowCount();
-		if($jum > 0){
-			$hasil = $row -> fetch();
-			$_SESSION['admin'] = $hasil;
-			echo '<script>alert("Login Sukses");window.location="index.php"</script>';
-		}else{
-			echo '<script>alert("Login Gagal");history.go(-1);</script>';
-		}
+	$user = strip_tags($_POST['user']);
+	$pass = strip_tags($_POST['pass']);
+
+	$sql = 'SELECT member.*, login.user, login.pass, login.level
+			FROM member INNER JOIN login ON member.id_member = login.id_member
+			WHERE user = ? AND pass = MD5(?)';
+
+	$row = $config->prepare($sql);
+	$row->execute(array($user, $pass));
+	$jum = $row->rowCount();
+
+	if($jum > 0){
+		$hasil = $row->fetch();
+		$_SESSION['user'] = $hasil['user'];
+		$_SESSION['level'] = $hasil['level'];
+		$_SESSION['admin'] = $hasil; // jika masih ingin pakai ini juga
+		echo '<script>alert("Login Sukses");window.location="index.php"</script>';
+	}else{
+		echo '<script>alert("Login Gagal");history.go(-1);</script>';
 	}
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login - POS Codekop</title>
+    <title>Login - POS TIGA DARA Mart</title>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -52,7 +57,7 @@
                         <!-- Nested Row within Card Body -->
 						<div class="p-5">
 							<div class="text-center">
-								<h4 class="h4 text-gray-900 mb-4"><b>Login POS Codekop</b></h4>
+								<h4 class="h4 text-gray-900 mb-4"><b>Login POS TIGA DARA Mart</b></h4>
 							</div>
 							<form class="form-login" method="POST">
 								<div class="form-group">
